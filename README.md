@@ -17,9 +17,7 @@
 2. ⚙️ [Tech Stack](#tech-stack)
 3. 🔋 [Features](#features)
 4. 🤸 [Quick Start](#quick-start)
-5. 🕸️ [Snippets](#snippets)
-6. 🔗 [Links](#links)
-7. 🚀 [More](#more)
+
 
 ## <a name="introduction">🤖 Introduction</a>
 
@@ -73,7 +71,7 @@ Make sure you have the following installed on your machine:
 **Cloning the Repository**
 
 ```bash
-git clone https://github.com/adrianhajdin/project_next_13_ai_prompt_sharing.git
+git clone https://github.com/Ragul8775/Promptopia.git
 cd project_next_13_ai_prompt_sharing
 ```
 
