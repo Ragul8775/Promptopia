@@ -1,7 +1,9 @@
 import NextAuth from "next-auth/next";
-import Google from "next-auth/providers/google";
+
 import GoogleProvider from "next-auth/providers/google";
 import { connectToDB } from "@utils/database";
+import User from "@models/user";
+
 const handler = NextAuth({
   providers: [
     GoogleProvider({
@@ -9,19 +11,38 @@ const handler = NextAuth({
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     }),
   ],
-  async session({ session }) {},
-  async signIn({ profile }) {
-    try {
-      //serverless -> Lambda -> dynamodb
-      await connectToDB();
-      //check if user already exist
+  callbacks: {
+    async session({ session }) {
+      const sessionUser = await User.findOne({ email: session.user.email });
 
-      //if not , create a new user and save it in database
-      return true;
-    } catch (error) {
-      console.log(error);
-      return false;
-    }
+      session.user.id = sessionUser._id.toString();
+      return session;
+    },
+
+    async signIn({ profile }) {
+      try {
+        //serverless -> Lambda -> dynamodb
+        await connectToDB();
+        //check if user already exist
+        const userExists = await User.findOne({
+          email: profile.email,
+        });
+
+        //if not , create a new user and save it in database
+
+        if (!userExists) {
+          await User.create({
+            email: profile.email,
+            username: profile.name.replace(" ", "").toLowerCase(),
+            image: profile.picture,
+          });
+        }
+        return true;
+      } catch (error) {
+        console.log(error);
+        return false;
+      }
+    },
   },
 });
 export { handler as GET, handler as POST };
