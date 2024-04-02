@@ -3,6 +3,7 @@
 export default {
   experimental: {
     appDir: true,
+    missingSuspenseWithCSRBailout: false,
     serverComponentsExternalPackages: ["mongoose"],
   },
   images: {
