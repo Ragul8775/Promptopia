@@ -33,20 +33,32 @@ const EditPrompt = () => {
     e.preventDefault();
 
     setSubmitting(true);
-    if (!promptId) return alert("Prompt Id not found");
+    if (!promptId) {
+      alert("Prompt Id not found");
+      setSubmitting(false);
+      return;
+    }
+
     try {
-      const response = await fetch(`api/prompt/${promptId}`, {
+      const response = await fetch(`/api/prompt/${promptId}`, {
         method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify({
           prompt: post.prompt,
           tag: post.tag,
         }),
       });
+
       if (response.ok) {
         router.push("/");
+      } else {
+        // Handle non-OK responses
+        console.error("Failed to update the prompt:", response.statusText);
       }
     } catch (error) {
-      console.log(error);
+      console.error("Error updating prompt:", error);
     } finally {
       setSubmitting(false);
     }

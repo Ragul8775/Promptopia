@@ -25,7 +25,7 @@ const Nav = () => {
           height={30}
           className="object-contain"
         />
-        <p className="logo_text">Promptopia</p>
+        <p className="logo_text">SharePrompt</p>
       </Link>
 
       <div className="sm:flex hidden">
@@ -67,7 +67,7 @@ const Nav = () => {
           <div className="flex ">
             <Image
               src={session?.user.image}
-              alt="Promptopia Logo"
+              alt="SharePrompt Logo"
               width={30}
               height={30}
               className="object-contain"
